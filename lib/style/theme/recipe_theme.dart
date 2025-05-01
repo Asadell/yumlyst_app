@@ -23,6 +23,38 @@ class RecipeTheme {
     );
   }
 
+  static TextSelectionThemeData get _textSelectionTheme {
+    return TextSelectionThemeData(
+      cursorColor: RecipeColors.primary700.color,
+      selectionHandleColor: RecipeColors.primary700.color,
+    );
+  }
+
+  static InputDecorationTheme get _inputDecorationTheme {
+    return InputDecorationTheme(
+      hintStyle: TextStyle(color: Colors.grey.shade400),
+      filled: true,
+
+      // input tidak fokus
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        borderSide: BorderSide(
+          color: Colors.grey.shade300,
+          width: 1.5,
+        ),
+      ),
+
+      // input fokus
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        borderSide: BorderSide(
+          color: RecipeColors.primary700.color,
+          width: 1.5,
+        ),
+      ),
+    );
+  }
+
   static AppBarTheme get _appBarTheme {
     return AppBarTheme(
       toolbarTextStyle: _textTheme.titleLarge,
@@ -40,6 +72,8 @@ class RecipeTheme {
       colorSchemeSeed: RecipeColors.primary900.color,
       brightness: Brightness.light,
       textTheme: _textTheme,
+      textSelectionTheme: _textSelectionTheme,
+      inputDecorationTheme: _inputDecorationTheme,
       useMaterial3: true,
       appBarTheme: _appBarTheme,
     );

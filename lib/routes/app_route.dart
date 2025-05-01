@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:recipe_app/features/auth/login_screen.dart';
-import 'package:recipe_app/features/auth/register_screen.dart';
+import 'package:recipe_app/features/auth/views/login_screen.dart';
+import 'package:recipe_app/features/auth/views/register_screen.dart';
 import 'package:recipe_app/features/camera/views/camera_screen.dart';
 import 'package:recipe_app/features/category/views/category_screen.dart';
 import 'package:recipe_app/features/food/views/about_screen.dart';
@@ -30,7 +30,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: SplashRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(
           page: OnboardingCookGuidanceRoute.page,
@@ -43,6 +43,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: LoginRoute.page,
+          initial: true,
         ),
         AutoRoute(
           page: RegisterRoute.page,
