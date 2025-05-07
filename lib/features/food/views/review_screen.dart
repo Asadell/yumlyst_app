@@ -15,7 +15,8 @@ class ReviewScreen extends StatelessWidget {
             children: [
               Text('Review Screen'),
               ElevatedButton(
-                onPressed: () => context.router.push(AddReviewRoute()),
+                onPressed: () =>
+                    context.router.push(AddReviewRoute(recipeId: 'null')),
                 child: Text('go to Add Review screen'),
               ),
               SizedBox(

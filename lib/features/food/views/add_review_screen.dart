@@ -5,7 +5,12 @@ import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
 class AddReviewScreen extends StatefulWidget {
-  const AddReviewScreen({super.key});
+  final String recipeId;
+
+  const AddReviewScreen({
+    super.key,
+    @PathParam('id') required this.recipeId,
+  });
 
   @override
   State<AddReviewScreen> createState() => _AddReviewScreenState();

@@ -9,6 +9,9 @@ import 'package:recipe_app/features/auth/data/services/auth_service.dart';
 import 'package:recipe_app/features/category/data/provider/category_list_provider.dart';
 import 'package:recipe_app/features/category/data/repositories/category_list_repository.dart';
 import 'package:recipe_app/features/category/data/services/category_list_service.dart';
+import 'package:recipe_app/features/food/data/provider/recipe_detail_provider.dart';
+import 'package:recipe_app/features/food/data/repositories/recipe_detail_repository.dart';
+import 'package:recipe_app/features/food/data/services/recipe_detail_service.dart';
 import 'package:recipe_app/features/home/data/provider/recipe_group_provider.dart';
 import 'package:recipe_app/features/home/data/repositories/recipe_group_respository.dart';
 import 'package:recipe_app/features/home/data/services/recipe_group_service.dart';
@@ -79,6 +82,23 @@ void main() {
         ChangeNotifierProvider<RecipeGroupProvider>(
           create: (context) => RecipeGroupProvider(
             context.read<RecipeRepository>(),
+          ),
+        ),
+
+        // Recipe Detail Feature
+        Provider<RecipeService>(
+          create: (context) => RecipeService(
+            context.read<Dio>(),
+          ),
+        ),
+        Provider<RecipeDetailRepository>(
+          create: (context) => RecipeDetailRepository(
+            context.read<RecipeService>(),
+          ),
+        ),
+        ChangeNotifierProvider<RecipeDetailProvider>(
+          create: (context) => RecipeDetailProvider(
+            context.read<RecipeDetailRepository>(),
           ),
         ),
       ],

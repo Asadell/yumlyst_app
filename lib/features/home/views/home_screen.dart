@@ -2,10 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/core/widgets/loading_indicator.dart';
+import 'package:recipe_app/features/auth/data/provider/auth_provider.dart';
 import 'package:recipe_app/features/category/data/provider/category_list_provider.dart';
 import 'package:recipe_app/features/category/data/static/category_list_result_state.dart';
 import 'package:recipe_app/features/food/data/models/recipe.dart';
-import 'package:recipe_app/features/food/views/food_detail_screen.dart';
+import 'package:recipe_app/features/food/views/recipe_detail_screen.dart';
 import 'package:recipe_app/features/home/data/models/recipe_group.dart';
 import 'package:recipe_app/features/home/data/provider/recipe_group_provider.dart';
 import 'package:recipe_app/routes/app_route.dart';
@@ -42,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildHeader(context),
-                _buildSearchBar(),
                 _buildCategories(),
                 _buildRecipeGroups(),
               ],
@@ -58,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         children: [
-          const Text(
-            'Good evening, kyiweza',
+          Text(
+            'Good evening, ${context.watch<AuthProvider>().identifier ?? 'Guest'}',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -71,24 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => context.router.push(SearchRoute()),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSearchBar() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: RecipeColors.neutral300.color),
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: 'Search for recipes',
-          prefixIcon: Icon(Icons.search, color: RecipeColors.neutral500.color),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(vertical: 12),
-        ),
       ),
     );
   }
@@ -240,14 +222,8 @@ class _HomeScreenState extends State<HomeScreen> {
             : (recipe.isFavorite ? 'Best' : null);
 
         return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const FoodDetailScreen(),
-              ),
-            );
-          },
+          onTap: () =>
+              context.router.push(RecipeDetailRoute(recipeId: recipe.recipeId)),
           child: Card(
             clipBehavior: Clip.antiAlias,
             child: Column(

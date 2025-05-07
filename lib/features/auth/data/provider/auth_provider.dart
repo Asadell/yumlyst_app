@@ -7,11 +7,13 @@ class AuthProvider extends ChangeNotifier {
 
   AuthStatus _status = AuthStatus.unauthenticated;
   String? _errorMessage;
+  String? _identifier;
 
   AuthProvider(this._authRepository);
 
   AuthStatus get status => _status;
   String? get errorMessage => _errorMessage;
+  String? get identifier => _identifier;
 
   Future<void> login(
       {required String identifier, required String password}) async {
@@ -29,6 +31,7 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       await _authRepository.login(identifier, password);
+      _identifier = identifier;
       _status = AuthStatus.authenticated;
     } catch (e) {
       _errorMessage = e.toString();
@@ -80,6 +83,7 @@ class AuthProvider extends ChangeNotifier {
   void reset() {
     _status = AuthStatus.unauthenticated;
     _errorMessage = null;
+    _identifier = null;
     notifyListeners();
   }
 }

@@ -7,9 +7,9 @@ import 'package:recipe_app/features/category/views/category_screen.dart';
 import 'package:recipe_app/features/food/views/about_screen.dart';
 import 'package:recipe_app/features/food/views/add_review_screen.dart';
 import 'package:recipe_app/features/food/views/favorite_screen.dart';
-import 'package:recipe_app/features/food/views/food_detail_screen.dart';
 import 'package:recipe_app/features/food/views/history_screen.dart';
 import 'package:recipe_app/features/food/views/instruction_screen.dart';
+import 'package:recipe_app/features/food/views/recipe_detail_screen.dart';
 import 'package:recipe_app/features/food/views/review_screen.dart';
 import 'package:recipe_app/features/food/views/search_screen.dart';
 import 'package:recipe_app/features/home/views/home_screen.dart';
@@ -70,7 +70,7 @@ class AppRouter extends RootStackRouter {
           page: SearchRoute.page,
         ),
         AutoRoute(
-          page: FoodDetailRoute.page,
+          page: RecipeDetailRoute.page,
         ),
         AutoRoute(
           page: InstructionRoute.page,

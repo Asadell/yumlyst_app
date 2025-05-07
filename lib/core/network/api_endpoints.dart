@@ -5,4 +5,5 @@ class ApiEndpoints {
   static const String register = '/register';
   static const String homeRecipes = '/recipes/home';
   static const String categories = '/categories';
+  static const String recipeDetail = '/recipes/detail';
 }

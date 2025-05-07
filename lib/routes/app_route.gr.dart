@@ -28,18 +28,43 @@ class AboutRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [AddReviewScreen]
-class AddReviewRoute extends PageRouteInfo<void> {
-  const AddReviewRoute({List<PageRouteInfo>? children})
-      : super(AddReviewRoute.name, initialChildren: children);
+class AddReviewRoute extends PageRouteInfo<AddReviewRouteArgs> {
+  AddReviewRoute({
+    Key? key,
+    required String recipeId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AddReviewRoute.name,
+          args: AddReviewRouteArgs(key: key, recipeId: recipeId),
+          rawPathParams: {'id': recipeId},
+          initialChildren: children,
+        );
 
   static const String name = 'AddReviewRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AddReviewScreen();
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<AddReviewRouteArgs>(
+        orElse: () => AddReviewRouteArgs(recipeId: pathParams.getString('id')),
+      );
+      return AddReviewScreen(key: args.key, recipeId: args.recipeId);
     },
   );
+}
+
+class AddReviewRouteArgs {
+  const AddReviewRouteArgs({this.key, required this.recipeId});
+
+  final Key? key;
+
+  final String recipeId;
+
+  @override
+  String toString() {
+    return 'AddReviewRouteArgs{key: $key, recipeId: $recipeId}';
+  }
 }
 
 /// generated route for
@@ -112,22 +137,6 @@ class FavoriteRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const FavoriteScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [FoodDetailScreen]
-class FoodDetailRoute extends PageRouteInfo<void> {
-  const FoodDetailRoute({List<PageRouteInfo>? children})
-      : super(FoodDetailRoute.name, initialChildren: children);
-
-  static const String name = 'FoodDetailRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const FoodDetailScreen();
     },
   );
 }
@@ -290,6 +299,48 @@ class ProfileRoute extends PageRouteInfo<void> {
       return const ProfileScreen();
     },
   );
+}
+
+/// generated route for
+/// [RecipeDetailScreen]
+class RecipeDetailRoute extends PageRouteInfo<RecipeDetailRouteArgs> {
+  RecipeDetailRoute({
+    Key? key,
+    required String recipeId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RecipeDetailRoute.name,
+          args: RecipeDetailRouteArgs(key: key, recipeId: recipeId),
+          rawPathParams: {'id': recipeId},
+          initialChildren: children,
+        );
+
+  static const String name = 'RecipeDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<RecipeDetailRouteArgs>(
+        orElse: () =>
+            RecipeDetailRouteArgs(recipeId: pathParams.getString('id')),
+      );
+      return RecipeDetailScreen(key: args.key, recipeId: args.recipeId);
+    },
+  );
+}
+
+class RecipeDetailRouteArgs {
+  const RecipeDetailRouteArgs({this.key, required this.recipeId});
+
+  final Key? key;
+
+  final String recipeId;
+
+  @override
+  String toString() {
+    return 'RecipeDetailRouteArgs{key: $key, recipeId: $recipeId}';
+  }
 }
 
 /// generated route for
