@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
     switch (loginProvider.status) {
       case AuthStatus.authenticated:
         ToastUtil.showSuccess('Login successful!');
-        context.router.push(MainRoute());
+        context.router.replaceAll([MainRoute()]);
         break;
       default:
         ToastUtil.showWarning(loginProvider.errorMessage ?? "Login failed.");

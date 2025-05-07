@@ -50,9 +50,17 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainRoute.page,
-        ),
-        AutoRoute(
-          page: HomeRoute.page,
+          children: [
+            AutoRoute(
+              page: HomeRoute.page,
+            ),
+            AutoRoute(
+              page: CameraRoute.page,
+            ),
+            AutoRoute(
+              page: ProfileRoute.page,
+            ),
+          ],
         ),
         AutoRoute(
           page: CategoryRoute.page,
@@ -74,12 +82,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: AddReviewRoute.page,
-        ),
-        AutoRoute(
-          page: CameraRoute.page,
-        ),
-        AutoRoute(
-          page: ProfileRoute.page,
         ),
         AutoRoute(
           page: UpdateProfileRoute.page,
