@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:recipe_app/features/auth/views/login_screen.dart';
 import 'package:recipe_app/features/auth/views/register_screen.dart';
 import 'package:recipe_app/features/camera/views/camera_screen.dart';

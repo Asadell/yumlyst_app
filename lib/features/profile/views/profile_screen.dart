@@ -101,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.history,
           title: 'Histories',
           iconColor: RecipeColors.primary700.color,
-          onTap: () {},
+          onTap: () => context.router.push(HistoryRoute()),
         ),
         _buildProfileMenuItem(
           icon: Icons.favorite,

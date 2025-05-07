@@ -14,7 +14,7 @@ part of 'app_route.dart';
 /// [AboutScreen]
 class AboutRoute extends PageRouteInfo<void> {
   const AboutRoute({List<PageRouteInfo>? children})
-    : super(AboutRoute.name, initialChildren: children);
+      : super(AboutRoute.name, initialChildren: children);
 
   static const String name = 'AboutRoute';
 
@@ -30,7 +30,7 @@ class AboutRoute extends PageRouteInfo<void> {
 /// [AddReviewScreen]
 class AddReviewRoute extends PageRouteInfo<void> {
   const AddReviewRoute({List<PageRouteInfo>? children})
-    : super(AddReviewRoute.name, initialChildren: children);
+      : super(AddReviewRoute.name, initialChildren: children);
 
   static const String name = 'AddReviewRoute';
 
@@ -46,7 +46,7 @@ class AddReviewRoute extends PageRouteInfo<void> {
 /// [CameraScreen]
 class CameraRoute extends PageRouteInfo<void> {
   const CameraRoute({List<PageRouteInfo>? children})
-    : super(CameraRoute.name, initialChildren: children);
+      : super(CameraRoute.name, initialChildren: children);
 
   static const String name = 'CameraRoute';
 
@@ -60,25 +60,51 @@ class CameraRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CategoryScreen]
-class CategoryRoute extends PageRouteInfo<void> {
-  const CategoryRoute({List<PageRouteInfo>? children})
-    : super(CategoryRoute.name, initialChildren: children);
+class CategoryRoute extends PageRouteInfo<CategoryRouteArgs> {
+  CategoryRoute({
+    Key? key,
+    required String category,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CategoryRoute.name,
+          args: CategoryRouteArgs(key: key, category: category),
+          rawPathParams: {'category': category},
+          initialChildren: children,
+        );
 
   static const String name = 'CategoryRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CategoryScreen();
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<CategoryRouteArgs>(
+        orElse: () =>
+            CategoryRouteArgs(category: pathParams.getString('category')),
+      );
+      return CategoryScreen(key: args.key, category: args.category);
     },
   );
+}
+
+class CategoryRouteArgs {
+  const CategoryRouteArgs({this.key, required this.category});
+
+  final Key? key;
+
+  final String category;
+
+  @override
+  String toString() {
+    return 'CategoryRouteArgs{key: $key, category: $category}';
+  }
 }
 
 /// generated route for
 /// [FavoriteScreen]
 class FavoriteRoute extends PageRouteInfo<void> {
   const FavoriteRoute({List<PageRouteInfo>? children})
-    : super(FavoriteRoute.name, initialChildren: children);
+      : super(FavoriteRoute.name, initialChildren: children);
 
   static const String name = 'FavoriteRoute';
 
@@ -94,7 +120,7 @@ class FavoriteRoute extends PageRouteInfo<void> {
 /// [FoodDetailScreen]
 class FoodDetailRoute extends PageRouteInfo<void> {
   const FoodDetailRoute({List<PageRouteInfo>? children})
-    : super(FoodDetailRoute.name, initialChildren: children);
+      : super(FoodDetailRoute.name, initialChildren: children);
 
   static const String name = 'FoodDetailRoute';
 
@@ -110,7 +136,7 @@ class FoodDetailRoute extends PageRouteInfo<void> {
 /// [HelpCenterScreen]
 class HelpCenterRoute extends PageRouteInfo<void> {
   const HelpCenterRoute({List<PageRouteInfo>? children})
-    : super(HelpCenterRoute.name, initialChildren: children);
+      : super(HelpCenterRoute.name, initialChildren: children);
 
   static const String name = 'HelpCenterRoute';
 
@@ -126,7 +152,7 @@ class HelpCenterRoute extends PageRouteInfo<void> {
 /// [HistoryScreen]
 class HistoryRoute extends PageRouteInfo<void> {
   const HistoryRoute({List<PageRouteInfo>? children})
-    : super(HistoryRoute.name, initialChildren: children);
+      : super(HistoryRoute.name, initialChildren: children);
 
   static const String name = 'HistoryRoute';
 
@@ -142,7 +168,7 @@ class HistoryRoute extends PageRouteInfo<void> {
 /// [HomeScreen]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
+      : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -158,7 +184,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [InstructionScreen]
 class InstructionRoute extends PageRouteInfo<void> {
   const InstructionRoute({List<PageRouteInfo>? children})
-    : super(InstructionRoute.name, initialChildren: children);
+      : super(InstructionRoute.name, initialChildren: children);
 
   static const String name = 'InstructionRoute';
 
@@ -174,7 +200,7 @@ class InstructionRoute extends PageRouteInfo<void> {
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
-    : super(LoginRoute.name, initialChildren: children);
+      : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
@@ -190,7 +216,7 @@ class LoginRoute extends PageRouteInfo<void> {
 /// [MainScreen]
 class MainRoute extends PageRouteInfo<void> {
   const MainRoute({List<PageRouteInfo>? children})
-    : super(MainRoute.name, initialChildren: children);
+      : super(MainRoute.name, initialChildren: children);
 
   static const String name = 'MainRoute';
 
@@ -206,7 +232,7 @@ class MainRoute extends PageRouteInfo<void> {
 /// [OnboardingCookGuidanceScreen]
 class OnboardingCookGuidanceRoute extends PageRouteInfo<void> {
   const OnboardingCookGuidanceRoute({List<PageRouteInfo>? children})
-    : super(OnboardingCookGuidanceRoute.name, initialChildren: children);
+      : super(OnboardingCookGuidanceRoute.name, initialChildren: children);
 
   static const String name = 'OnboardingCookGuidanceRoute';
 
@@ -222,7 +248,7 @@ class OnboardingCookGuidanceRoute extends PageRouteInfo<void> {
 /// [OnboardingImageRecognitionScreen]
 class OnboardingImageRecognitionRoute extends PageRouteInfo<void> {
   const OnboardingImageRecognitionRoute({List<PageRouteInfo>? children})
-    : super(OnboardingImageRecognitionRoute.name, initialChildren: children);
+      : super(OnboardingImageRecognitionRoute.name, initialChildren: children);
 
   static const String name = 'OnboardingImageRecognitionRoute';
 
@@ -238,7 +264,7 @@ class OnboardingImageRecognitionRoute extends PageRouteInfo<void> {
 /// [OnboardingUserDiscussionScreen]
 class OnboardingUserDiscussionRoute extends PageRouteInfo<void> {
   const OnboardingUserDiscussionRoute({List<PageRouteInfo>? children})
-    : super(OnboardingUserDiscussionRoute.name, initialChildren: children);
+      : super(OnboardingUserDiscussionRoute.name, initialChildren: children);
 
   static const String name = 'OnboardingUserDiscussionRoute';
 
@@ -254,7 +280,7 @@ class OnboardingUserDiscussionRoute extends PageRouteInfo<void> {
 /// [ProfileScreen]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
-    : super(ProfileRoute.name, initialChildren: children);
+      : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
@@ -270,7 +296,7 @@ class ProfileRoute extends PageRouteInfo<void> {
 /// [RegisterScreen]
 class RegisterRoute extends PageRouteInfo<void> {
   const RegisterRoute({List<PageRouteInfo>? children})
-    : super(RegisterRoute.name, initialChildren: children);
+      : super(RegisterRoute.name, initialChildren: children);
 
   static const String name = 'RegisterRoute';
 
@@ -286,7 +312,7 @@ class RegisterRoute extends PageRouteInfo<void> {
 /// [ResetPasswordScreen]
 class ResetPasswordRoute extends PageRouteInfo<void> {
   const ResetPasswordRoute({List<PageRouteInfo>? children})
-    : super(ResetPasswordRoute.name, initialChildren: children);
+      : super(ResetPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ResetPasswordRoute';
 
@@ -302,7 +328,7 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
 /// [ReviewScreen]
 class ReviewRoute extends PageRouteInfo<void> {
   const ReviewRoute({List<PageRouteInfo>? children})
-    : super(ReviewRoute.name, initialChildren: children);
+      : super(ReviewRoute.name, initialChildren: children);
 
   static const String name = 'ReviewRoute';
 
@@ -318,7 +344,7 @@ class ReviewRoute extends PageRouteInfo<void> {
 /// [SearchScreen]
 class SearchRoute extends PageRouteInfo<void> {
   const SearchRoute({List<PageRouteInfo>? children})
-    : super(SearchRoute.name, initialChildren: children);
+      : super(SearchRoute.name, initialChildren: children);
 
   static const String name = 'SearchRoute';
 
@@ -334,7 +360,7 @@ class SearchRoute extends PageRouteInfo<void> {
 /// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
-    : super(SplashRoute.name, initialChildren: children);
+      : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 
@@ -350,7 +376,7 @@ class SplashRoute extends PageRouteInfo<void> {
 /// [UpdateProfileScreen]
 class UpdateProfileRoute extends PageRouteInfo<void> {
   const UpdateProfileRoute({List<PageRouteInfo>? children})
-    : super(UpdateProfileRoute.name, initialChildren: children);
+      : super(UpdateProfileRoute.name, initialChildren: children);
 
   static const String name = 'UpdateProfileRoute';
 
