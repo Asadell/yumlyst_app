@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 _buildAccountSection(context),
                 const SizedBox(height: 32),
-                _buildOthersSection(),
+                _buildOthersSection(context),
               ],
             ),
           ),
@@ -107,13 +107,13 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.favorite,
           title: 'Favorites',
           iconColor: RecipeColors.primary700.color,
-          onTap: () {},
+          onTap: () => context.router.push(FavoriteRoute()),
         ),
       ],
     );
   }
 
-  Widget _buildOthersSection() {
+  Widget _buildOthersSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -142,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.help_center,
           title: 'Help Center',
           iconColor: RecipeColors.secondary700.color,
-          onTap: () {},
+          onTap: () => context.router.push(HelpCenterRoute()),
         ),
         const SizedBox(height: 32),
         _buildLogoutButton(),
