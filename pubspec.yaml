@@ -29,6 +29,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/loading_cover.jpg
 
   fonts:
     - family: Roboto
