@@ -1,12 +1,35 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_app/core/widgets/loading_indicator.dart';
+import 'package:recipe_app/features/category/data/provider/category_list_provider.dart';
+import 'package:recipe_app/features/category/data/static/category_list_result_state.dart';
+import 'package:recipe_app/features/food/data/models/recipe.dart';
 import 'package:recipe_app/features/food/views/food_detail_screen.dart';
+import 'package:recipe_app/features/home/data/models/recipe_group.dart';
+import 'package:recipe_app/features/home/data/provider/recipe_group_provider.dart';
 import 'package:recipe_app/routes/app_route.dart';
 import 'package:recipe_app/style/colors/recipe_colors.dart';
+import 'package:recipe_app/features/home/data/static/recipe_group_list_result_state.dart';
 
 @RoutePage()
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Load data when screen initializes
+    Future.microtask(() {
+      context.read<CategoryListProvider>().loadCategories();
+      context.read<RecipeGroupProvider>().loadHomeRecipes();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +44,7 @@ class HomeScreen extends StatelessWidget {
                 _buildHeader(context),
                 _buildSearchBar(),
                 _buildCategories(),
-                _buildDinnerRecommendations(),
-                _buildHealthyLifestyleChoices(),
+                _buildRecipeGroups(),
               ],
             ),
           ),
@@ -72,13 +94,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildCategories() {
-    final categories = [
-      'Rice',
-      'Meats',
-      'Traditionals',
-      'Snacks',
-      'Vegetables'
-    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -92,30 +107,45 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(height: 12),
         SizedBox(
           height: 36,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: categories.length,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: const EdgeInsets.only(right: 8),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: RecipeColors.neutral100.color,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: GestureDetector(
-                  onTap: () => context.router
-                      .push(CategoryRoute(category: categories[index])),
-                  child: Text(
-                    categories[index],
-                    style: TextStyle(
-                      color: RecipeColors.neutral700.color,
-                      fontWeight: FontWeight.w500,
-                    ),
+          child: Consumer<CategoryListProvider>(
+            builder: (context, provider, child) {
+              return switch (provider.resultState) {
+                CategoryListLoadingState() => const Center(
+                    child: LoadingIndicator(),
                   ),
-                ),
-              );
+                CategoryListLoadedState(data: var categories) =>
+                  ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      final category = categories[index];
+                      return Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: RecipeColors.neutral100.color,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: GestureDetector(
+                          onTap: () => context.router
+                              .push(CategoryRoute(category: category.name)),
+                          child: Text(
+                            category.name,
+                            style: TextStyle(
+                              color: RecipeColors.neutral700.color,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                CategoryListErrorState(error: var message) => Center(
+                    child: Text('Error: $message'),
+                  ),
+                _ => const SizedBox(),
+              };
             },
           ),
         ),
@@ -124,94 +154,75 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDinnerRecommendations() {
+  Widget _buildRecipeGroups() {
+    return Consumer<RecipeGroupProvider>(
+      builder: (context, provider, child) {
+        return switch (provider.resultState) {
+          RecipeGroupListLoadingState() => const Center(
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: LoadingIndicator(),
+              ),
+            ),
+          RecipeGroupListLoadedState(data: var recipeGroups) => Column(
+              children: recipeGroups
+                  .map((group) => _buildRecipeGroup(group))
+                  .toList(),
+            ),
+          RecipeGroupListErrorState(error: var message) => Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text('Error: $message'),
+              ),
+            ),
+          _ => const SizedBox(),
+        };
+      },
+    );
+  }
+
+  Widget _buildRecipeGroup(RecipeGroup group) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const Text(
-              'Dinner time! ',
-              style: TextStyle(
+            Text(
+              group.title,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Image.asset('assets/images/loading_cover.jpg',
-                width: 20, height: 20),
-            Image.asset('assets/images/loading_cover.jpg',
-                width: 20, height: 20),
+            const SizedBox(width: 5),
+            if (group.title.contains('Dinner')) ...[
+              Image.asset('assets/images/loading_cover.jpg',
+                  width: 20, height: 20),
+              Image.asset('assets/images/loading_cover.jpg',
+                  width: 20, height: 20),
+            ] else if (group.title.contains('Healthy'))
+              Image.asset('assets/images/loading_cover.jpg',
+                  width: 20, height: 20),
           ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Check out these recommendations!',
-          style: TextStyle(
-            fontSize: 14,
-            color: RecipeColors.neutral600.color,
+        if (group.subtitle != null) ...[
+          const SizedBox(height: 4),
+          Text(
+            group.subtitle!,
+            style: TextStyle(
+              fontSize: 14,
+              color: RecipeColors.neutral600.color,
+            ),
           ),
-        ),
+        ],
         const SizedBox(height: 16),
-        _buildFoodGrid([
-          _FoodItem(
-            name: 'Semur Bola Daging',
-            image: 'assets/images/loading_cover.jpg',
-            rating: 4.8,
-            timeInMinutes: 40,
-            tag: 'Best',
-          ),
-          _FoodItem(
-            name: 'Bebek Goreng Sambal',
-            image: 'assets/images/loading_cover.jpg',
-            rating: 5.0,
-            timeInMinutes: 35,
-            tag: null,
-          ),
-        ]),
+        _buildFoodGrid(group.recipes),
         const SizedBox(height: 20),
       ],
     );
   }
 
-  Widget _buildHealthyLifestyleChoices() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Text(
-              'Healthy Lifestyle Choices ',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Image.asset('assets/images/loading_cover.jpg',
-                width: 20, height: 20),
-          ],
-        ),
-        const SizedBox(height: 16),
-        _buildFoodGrid([
-          _FoodItem(
-            name: 'Salad Halibut',
-            image: 'assets/images/loading_cover.jpg',
-            rating: 4.8,
-            timeInMinutes: 25,
-            tag: 'New',
-          ),
-          _FoodItem(
-            name: 'Sayur Asem',
-            image: 'assets/images/loading_cover.jpg',
-            rating: 5.0,
-            timeInMinutes: 30,
-            tag: null,
-          ),
-        ]),
-      ],
-    );
-  }
-
-  Widget _buildFoodGrid(List<_FoodItem> items) {
+  Widget _buildFoodGrid(List<Recipe> items) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -223,7 +234,11 @@ class HomeScreen extends StatelessWidget {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        final food = items[index];
+        final recipe = items[index];
+        final String? tag = recipe.difficulty == Difficulty.EASY
+            ? 'Easy'
+            : (recipe.isFavorite ? 'Best' : null);
+
         return GestureDetector(
           onTap: () {
             Navigator.push(
@@ -240,13 +255,19 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Image.asset(
-                      food.image,
+                    Image.network(
+                      recipe.image,
                       width: double.infinity,
                       height: 120,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        'assets/images/loading_cover.jpg',
+                        width: double.infinity,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    if (food.tag != null)
+                    if (tag != null)
                       Positioned(
                         right: 0,
                         child: Container(
@@ -254,7 +275,7 @@ class HomeScreen extends StatelessWidget {
                               horizontal: 8, vertical: 4),
                           color: RecipeColors.primary700.color,
                           child: Text(
-                            food.tag!,
+                            tag,
                             style: TextStyle(
                               color: RecipeColors.white.color,
                               fontSize: 12,
@@ -271,7 +292,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        food.name,
+                        recipe.name,
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
@@ -289,7 +310,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            food.rating.toString(),
+                            recipe.rating.toString(),
                             style: const TextStyle(fontSize: 12),
                           ),
                           const SizedBox(width: 12),
@@ -300,7 +321,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '${food.timeInMinutes} min',
+                            '${recipe.estimationTime} min',
                             style: const TextStyle(fontSize: 12),
                           ),
                         ],
@@ -315,20 +336,4 @@ class HomeScreen extends StatelessWidget {
       },
     );
   }
-}
-
-class _FoodItem {
-  final String name;
-  final String image;
-  final double rating;
-  final int timeInMinutes;
-  final String? tag;
-
-  _FoodItem({
-    required this.name,
-    required this.image,
-    required this.rating,
-    required this.timeInMinutes,
-    this.tag,
-  });
 }

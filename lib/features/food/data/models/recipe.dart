@@ -4,9 +4,9 @@ class Recipe {
   Difficulty difficulty;
   String image;
   bool isFavorite;
-  int favorites;
-  int rating;
-  int estimationTime;
+  double favorites;
+  double rating;
+  double estimationTime;
 
   Recipe({
     required this.recipeId,
@@ -25,9 +25,9 @@ class Recipe {
         difficulty: difficultyValues.map[json["difficulty"]]!,
         image: json["image"],
         isFavorite: json["isFavorite"],
-        favorites: json["favorites"],
-        rating: json["rating"],
-        estimationTime: json["estimation_time"],
+        favorites: (json["favorites"] as num).toDouble(),
+        rating: (json["rating"] as num).toDouble(),
+        estimationTime: (json["estimation_time"] as num).toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
