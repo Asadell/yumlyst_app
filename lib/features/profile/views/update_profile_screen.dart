@@ -68,7 +68,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   CircleAvatar(
                     radius: 50,
                     backgroundImage:
-                        AssetImage('assets/images/profile_placeholder.png'),
+                        AssetImage('assets/images/loading_cover.jpg'),
                     foregroundImage: _profileImage != null
                         ? FileImage(_profileImage!) as ImageProvider
                         : null,

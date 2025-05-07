@@ -29,7 +29,7 @@ class CategoryScreen extends StatelessWidget {
         children: const [
           FoodCard(
             name: 'Nasi Kremes',
-            imageUrl: 'assets/loading_cover.jpg',
+            imageUrl: 'assets/images/loading_cover.jpg',
             price: 'Rp35.000',
             rating: 4.8,
             reviewCount: 103,
@@ -37,7 +37,7 @@ class CategoryScreen extends StatelessWidget {
           ),
           FoodCard(
             name: 'Bebek Goreng Sambal Hitam',
-            imageUrl: 'assets/loading_cover.jpg',
+            imageUrl: 'assets/images/loading_cover.jpg',
             price: 'Rp45.000',
             rating: 4.9,
             reviewCount: 127,
@@ -45,7 +45,7 @@ class CategoryScreen extends StatelessWidget {
           ),
           FoodCard(
             name: 'Nasi Pecel',
-            imageUrl: 'assets/loading_cover.jpg',
+            imageUrl: 'assets/images/loading_cover.jpg',
             price: 'Rp28.000',
             rating: 4.7,
             reviewCount: 89,
@@ -53,7 +53,7 @@ class CategoryScreen extends StatelessWidget {
           ),
           FoodCard(
             name: 'Nasi Goreng',
-            imageUrl: 'assets/loading_cover.jpg',
+            imageUrl: 'assets/images/loading_cover.jpg',
             price: 'Rp30.000',
             rating: 4.9,
             reviewCount: 156,
@@ -61,7 +61,7 @@ class CategoryScreen extends StatelessWidget {
           ),
           FoodCard(
             name: 'Tahu Tek',
-            imageUrl: 'assets/loading_cover.jpg',
+            imageUrl: 'assets/images/loading_cover.jpg',
             price: 'Rp25.000',
             rating: 4.6,
             reviewCount: 81,

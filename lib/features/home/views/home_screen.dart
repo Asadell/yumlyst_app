@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/features/food/views/food_detail_screen.dart';
+import 'package:recipe_app/routes/app_route.dart';
 import 'package:recipe_app/style/colors/recipe_colors.dart';
 
 @RoutePage()
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeader(),
+                _buildHeader(context),
                 _buildSearchBar(),
                 _buildCategories(),
                 _buildDinnerRecommendations(),
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
@@ -45,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () => context.router.push(SearchRoute()),
           ),
         ],
       ),
@@ -103,11 +104,15 @@ class HomeScreen extends StatelessWidget {
                   color: RecipeColors.neutral100.color,
                   borderRadius: BorderRadius.circular(18),
                 ),
-                child: Text(
-                  categories[index],
-                  style: TextStyle(
-                    color: RecipeColors.neutral700.color,
-                    fontWeight: FontWeight.w500,
+                child: GestureDetector(
+                  onTap: () => context.router
+                      .push(CategoryRoute(category: categories[index])),
+                  child: Text(
+                    categories[index],
+                    style: TextStyle(
+                      color: RecipeColors.neutral700.color,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               );
