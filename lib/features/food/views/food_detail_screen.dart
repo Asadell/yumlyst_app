@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/style/colors/recipe_colors.dart';
 
+@RoutePage()
 class FoodDetailScreen extends StatelessWidget {
   const FoodDetailScreen({super.key});
 

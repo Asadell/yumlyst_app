@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/routes/app_route.dart';
 import 'package:recipe_app/style/colors/recipe_colors.dart';
 
+@RoutePage()
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -24,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 _buildProfileHeader(),
                 const SizedBox(height: 32),
-                _buildAccountSection(),
+                _buildAccountSection(context),
                 const SizedBox(height: 32),
                 _buildOthersSection(),
               ],
@@ -69,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountSection() {
+  Widget _buildAccountSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,13 +89,13 @@ class ProfileScreen extends StatelessWidget {
           icon: Icons.person,
           title: 'Update Profile',
           iconColor: RecipeColors.primary700.color,
-          onTap: () {},
+          onTap: () => context.router.push(UpdateProfileRoute()),
         ),
         _buildProfileMenuItem(
           icon: Icons.lock,
           title: 'Reset Password',
           iconColor: RecipeColors.primary700.color,
-          onTap: () {},
+          onTap: () => context.router.push(ResetPasswordRoute()),
         ),
         _buildProfileMenuItem(
           icon: Icons.history,

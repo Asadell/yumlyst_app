@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/features/food/views/food_detail_screen.dart';
 import 'package:recipe_app/style/colors/recipe_colors.dart';
 
+@RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
